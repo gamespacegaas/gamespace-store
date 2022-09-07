@@ -19,10 +19,10 @@ contract GameSpaceStoreV2 is
 {
     string private _baseUri;
 
-    event SetDefaultRoyalty(address receiver, uint96 feeNumerator);
+    event SetDefaultRoyalty(address indexed receiver, uint96 feeNumerator);
     event SetTokenRoyalty(
-        uint256 tokenId,
-        address receiver,
+        uint256 indexed tokenId,
+        address indexed receiver,
         uint96 feeNumerator
     );
 
