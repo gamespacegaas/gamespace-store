@@ -9,7 +9,7 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol";
 import "@openzeppelin/contracts/token/common/ERC2981.sol";
 import "./common/ERC4907.sol";
 
-contract GameSpaceStore is
+contract GameSpaceStoreV2 is
     ERC4907,
     ERC2981,
     ERC721Enumerable,
@@ -18,6 +18,13 @@ contract GameSpaceStore is
     ERC721Burnable
 {
     string private _baseUri;
+
+    event SetDefaultRoyalty(address receiver, uint96 feeNumerator);
+    event SetTokenRoyalty(
+        uint256 tokenId,
+        address receiver,
+        uint96 feeNumerator
+    );
 
     constructor(
         string memory name_,
@@ -56,6 +63,7 @@ contract GameSpaceStore is
         onlyOwner
     {
         _setDefaultRoyalty(receiver, feeNumerator);
+        emit SetDefaultRoyalty(receiver, feeNumerator);
     }
 
     function setTokenRoyalty(
@@ -64,6 +72,7 @@ contract GameSpaceStore is
         uint96 feeNumerator
     ) public onlyOwner {
         _setTokenRoyalty(tokenId, receiver, feeNumerator);
+        emit SetTokenRoyalty(tokenId, receiver, feeNumerator);
     }
 
     function supportsInterface(bytes4 interfaceId)
